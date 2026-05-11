@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Moji.API/Moji.API.csproj" />
+  <Project Path="Moji.Application/Moji.Application.csproj" />
+  <Project Path="Moji.Domain/Moji.Domain.csproj" />
+  <Project Path="Moji.Infrastructure/Moji.Infrastructure.csproj" />
+</Solution>
