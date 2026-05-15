@@ -14,6 +14,6 @@ namespace Moji.Application.Interfaces
         void Delete(User user);
         Task<List<User>> GetAsync();
         Task<User?> GetByIdAsync(int id);
-        Task<List<User>> FindAsync(Expression<Func<bool,User>> ex);
+        Task<List<User>> FindAsync(Expression<Func<User,bool>> ex);
     }
 }

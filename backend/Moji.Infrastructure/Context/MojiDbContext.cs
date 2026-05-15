@@ -15,6 +15,7 @@ namespace Moji.Infrastructure.Context
         public DbSet<Post> Posts { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<University> Universities { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Category> Category { get; set; }
         // Để ngăn chặn việc xóa university cascade post, user-> ta đặt config ondelete ở phía dependent là post,user
         // Chỉ config relationship ở bên chứa FK, Ex: User(1)->(n)University thì cấu hình relationship ở phía user vì user chưa FK
@@ -45,6 +46,11 @@ namespace Moji.Infrastructure.Context
             {
                 b.HasKey(b=>b.Id);
                 b.HasOne(b => b.Post).WithMany(p => p.Images).HasForeignKey(b=>b.PostId);
+            });
+            modelBuilder.Entity<RefreshToken>(b =>
+            {
+                b.HasKey(b => b.Id);
+                b.HasOne(b=>b.User).WithMany(u=>u.RefreshTokens).HasForeignKey(b=>b.UserId);
             });
         }
     }

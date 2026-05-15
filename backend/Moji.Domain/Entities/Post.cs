@@ -14,13 +14,13 @@ namespace Moji.Domain.Entities
         public DateTime CreateAt { get; set; }
         // User who create this post
         public int CreatorId {  get; set; }
-        public User Creator { get; set; }=new User();
+        public User Creator { get; set; } = null!;
         // University which this post belong to
         public int UniversityId {  get; set; }
-        public University University { get; set; }=new University();
+        public University University { get; set; } = null!;
         // Category which this post belong to
         public int CategoryId {  get; set; }
-        public Category Category { get; set; }=new Category();
+        public Category Category { get; set; }=null!;
         // Images of the product in this post
         public List<Image> Images { get; set; }=new List<Image>();
     }

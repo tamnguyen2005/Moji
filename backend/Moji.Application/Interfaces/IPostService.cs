@@ -1,4 +1,5 @@
-﻿using Moji.Application.DTOS.Post;
+﻿using Moji.Application.DTOS.Generic;
+using Moji.Application.DTOS.Post;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Moji.Application.Interfaces
     {
         Task CreatePostAsync(CreatePostRequest request);
         Task<DetailPostResponse> GetPostByIdAsync(int id);
-        Task<PostResponse> GetPostAsync(QueryPostRequest request);
+        Task<PageResult<PostResponse>> GetPostAsync(QueryPostRequest request);
         Task UpdatePostAsync(UpdatePostRequest request);
         Task DeletePostAsync(int id);
     }

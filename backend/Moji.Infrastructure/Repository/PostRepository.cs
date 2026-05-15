@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Moji.Application.DTOS.Generic;
 using Moji.Application.DTOS.Post;
 using Moji.Application.Interfaces;
 using Moji.Domain.Entities;
@@ -37,7 +38,7 @@ namespace Moji.Infrastructure.Repository
             return result;
         }
 
-        public async Task<List<Post>> GetAsync(QueryPostRequest request)
+        public async Task<PageResult<Post>> GetAsync(QueryPostRequest request)
         {
             var queryAble= _context.Posts.AsQueryable();
             if(!string.IsNullOrEmpty(request.Title))
@@ -56,17 +57,28 @@ namespace Moji.Infrastructure.Repository
             {
                 queryAble = queryAble.Where(p=>p.UniversityId==request.UniversityId);
             }
+            queryAble = queryAble.Include(p => p.University);
             queryAble=queryAble.AsNoTracking();
+            var totalItem = await queryAble.CountAsync();
             var result = await queryAble.OrderByDescending(p => p.CreateAt)
                                         .Skip((request.PageNumber-1)*request.PageSize)
                                         .Take(request.PageSize)
                                         .ToListAsync();
-            return result;
+            return new PageResult<Post>
+            {
+                Items= result,
+                PageNumber= request.PageNumber,
+                PageSize= request.PageSize,
+                TotalCount= totalItem
+            };
         }
 
         public async Task<Post?> GetByIdAsync(int id)
         {
-            var result=await _context.Posts.FindAsync(id);
+           var result=await _context.Posts.Include(p=>p.University)
+                                          .Include(p=>p.Creator)
+                                          .AsNoTracking()
+                                          .FirstOrDefaultAsync(p=>p.Id==id);
             return result;
         }
 

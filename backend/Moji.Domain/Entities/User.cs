@@ -13,6 +13,7 @@ namespace Moji.Domain.Entities
         public DateTime CreateAt { get; set; }
         public virtual List<Post> Post {  get; set; }=new List<Post>();
         public int UniversityId {  get; set; }
-        public University University { get; set; }=new University();
+        public University University { get; set; } = null!;
+        public virtual List<RefreshToken> RefreshTokens { get; set; }= new List<RefreshToken>();
     }
 }

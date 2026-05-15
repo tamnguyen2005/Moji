@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Moji.Application.Interfaces
 {
-    public interface IUnitOfWork
+    public interface ICurrentUser
     {
-        Task SaveChangesAsync();
+        int UserId {  get; }
+        int UniversityId {  get; }
     }
 }
