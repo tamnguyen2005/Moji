@@ -4,6 +4,142 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Montserrat:wght@600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-background": "#131b2e",
+              "on-error-container": "#93000a",
+              "on-primary-container": "#eeefff",
+              "surface-variant": "#dae2fd",
+              "on-secondary-fixed-variant": "#7a3000",
+              "on-secondary-fixed": "#351000",
+              "on-primary-fixed-variant": "#003ea8",
+              "secondary-container": "#fe6b00",
+              outline: "#737686",
+              "surface-container-high": "#e2e7ff",
+              "surface-bright": "#faf8ff",
+              "secondary-fixed-dim": "#ffb693",
+              "on-tertiary-container": "#e9f2f8",
+              "tertiary-fixed-dim": "#bfc8ce",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-highest": "#dae2fd",
+              "error-container": "#ffdad6",
+              "on-secondary-container": "#572000",
+              "on-surface-variant": "#434655",
+              "primary-fixed": "#dbe1ff",
+              primary: "#004ac6",
+              "on-secondary": "#ffffff",
+              background: "#faf8ff",
+              "on-tertiary": "#ffffff",
+              "inverse-surface": "#283044",
+              secondary: "#a04100",
+              "outline-variant": "#c3c6d7",
+              "primary-container": "#2563eb",
+              "inverse-on-surface": "#eef0ff",
+              "tertiary-container": "#666f74",
+              "tertiary-fixed": "#dbe4ea",
+              "on-tertiary-fixed-variant": "#3f484d",
+              "on-primary-fixed": "#00174b",
+              "surface-tint": "#0053db",
+              surface: "#faf8ff",
+              "on-error": "#ffffff",
+              "on-tertiary-fixed": "#141d21",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-surface": "#131b2e",
+              "on-primary": "#ffffff",
+              error: "#ba1a1a",
+              tertiary: "#4e565b",
+              "inverse-primary": "#b4c5ff",
+              "surface-container-low": "#f2f3ff",
+              "surface-dim": "#d2d9f4",
+              "secondary-fixed": "#ffdbcc",
+              "surface-container": "#eaedff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              md: "24px",
+              base: "8px",
+              sm: "12px",
+              xl: "80px",
+              xs: "4px",
+              "margin-mobile": "16px",
+              "margin-desktop": "40px",
+              gutter: "16px",
+              lg: "48px",
+            },
+            fontFamily: {
+              "headline-md": ["Montserrat"],
+              "headline-lg-mobile": ["Montserrat"],
+              "body-lg": ["Inter"],
+              "headline-lg": ["Montserrat"],
+              "display-lg": ["Montserrat"],
+              "body-md": ["Inter"],
+              "label-md": ["Inter"],
+              caption: ["Inter"],
+            },
+            fontSize: {
+              "headline-md": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+              "headline-lg-mobile": [
+                "24px",
+                { lineHeight: "1.2", fontWeight: "700" },
+              ],
+              "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+              "headline-lg": ["32px", { lineHeight: "1.2", fontWeight: "700" }],
+              "display-lg": [
+                "48px",
+                {
+                  lineHeight: "1.1",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-md": ["16px", { lineHeight: "1.5", fontWeight: "400" }],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "1.4",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              caption: ["12px", { lineHeight: "1.4", fontWeight: "400" }],
+            },
+            boxShadow: {
+              "ambient-sm":
+                "0 2px 4px rgba(37, 99, 235, 0.05), 0 1px 2px rgba(0, 0, 0, 0.05)",
+              ambient:
+                "0 4px 6px rgba(37, 99, 235, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04)",
+              "ambient-lg":
+                "0 10px 15px rgba(37, 99, 235, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05)",
+            },
+          },
+        },
+      };
+    </script>
     <title>frontend</title>
   </head>
   <body>
