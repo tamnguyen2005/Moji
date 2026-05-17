@@ -49,18 +49,22 @@ namespace Moji.Application.Services
 
         public async Task DeletePostAsync(int id)
         {
-            var post=await _postRepository.GetByIdAsync(id);
+            var post=await _postRepository.GetForUpdateAsync(id);
             if(post==null)
             {
                 throw new KeyNotFoundException("Post does not exist !");
             }    
+            if(post.CreatorId!=_currentUser.UserId)
+            {
+                throw new UnauthorizedAccessException("You cannot delete others's post !");
+            }
             _postRepository.Delete(post);
             await _uow.SaveChangesAsync();
         }
 
         public async Task<PageResult<PostResponse>> GetPostAsync(QueryPostRequest request)
         {
-            var result = await _postRepository.GetAsync(request);
+            var result = await _postRepository.GetPageAsync(request);
             return new PageResult<PostResponse>
             {
                 Items = result.Items.Select(i => new PostResponse
@@ -77,14 +81,51 @@ namespace Moji.Application.Services
             };
         }
 
-        public Task<DetailPostResponse> GetPostByIdAsync(int id)
+        public async Task<DetailPostResponse> GetPostByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var post=await _postRepository.GetDetailByIdAsync(id);
+            if (post == null)
+                throw new KeyNotFoundException("Post does not exist !");
+            var result = new DetailPostResponse
+            {
+                Id=post.Id,
+                Title=post.Title,
+                Status=post.Status,
+                Description=post.Description,
+                Images=post.Images.Select(i=>i.Url).ToList(),
+                CreateAt=post.CreateAt,
+                Price=post.Price,
+                SellerId=post.CreatorId,
+                SellerName=post.Creator.Name
+            };
+            return result;
         }
 
-        public Task UpdatePostAsync(UpdatePostRequest request)
+        public async Task UpdatePostAsync(int id,UpdatePostRequest request)
         {
-            throw new NotImplementedException();
+            var post = await _postRepository.GetForUpdateAsync(id);
+            if (post == null)
+                throw new KeyNotFoundException("Post does not exist !");
+            if (post.CreatorId != _currentUser.UserId)
+                throw new UnauthorizedAccessException("You cannot edit others's post !");
+            if(!string.IsNullOrEmpty(request.Title))
+            {
+                post.Title = request.Title;
+            }
+            if(!string.IsNullOrEmpty(request.Description))
+            {
+                post.Description = request.Description;
+            }
+            if(request.Price.HasValue)
+            {
+                post.Price= request.Price.Value;
+            }
+            if(request.CategoryId.HasValue)
+            {
+                post.CategoryId= request.CategoryId.Value;
+            }
+            _postRepository.Update(post);
+            await _uow.SaveChangesAsync();
         }
     }
 }

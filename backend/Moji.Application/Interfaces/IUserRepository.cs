@@ -7,13 +7,9 @@ using System.Text;
 
 namespace Moji.Application.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository:IGenericRepository<User>
     {
-        void Add(User user);
-        void Update(User user);
-        void Delete(User user);
         Task<List<User>> GetAsync();
         Task<User?> GetByIdAsync(int id);
-        Task<List<User>> FindAsync(Expression<Func<User,bool>> ex);
     }
 }

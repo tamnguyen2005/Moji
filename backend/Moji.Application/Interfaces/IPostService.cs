@@ -11,7 +11,7 @@ namespace Moji.Application.Interfaces
         Task CreatePostAsync(CreatePostRequest request);
         Task<DetailPostResponse> GetPostByIdAsync(int id);
         Task<PageResult<PostResponse>> GetPostAsync(QueryPostRequest request);
-        Task UpdatePostAsync(UpdatePostRequest request);
+        Task UpdatePostAsync(int id,UpdatePostRequest request);
         Task DeletePostAsync(int id);
     }
 }

@@ -8,13 +8,10 @@ using System.Text;
 
 namespace Moji.Application.Interfaces
 {
-    public interface IPostRepository
+    public interface IPostRepository:IGenericRepository<Post>
     {
-        void Add(Post post);
-        void Update(Post post);
-        void Delete(Post post);
-        Task<PageResult<Post>> GetAsync(QueryPostRequest request);
-        Task<Post?> GetByIdAsync(int id);
-        Task<List<Post>> FindAsync(Expression<Func<Post,bool>>ex);
+        Task<PageResult<Post>> GetPageAsync(QueryPostRequest request);
+        Task<Post?> GetDetailByIdAsync(int id);
+        Task<Post?> GetForUpdateAsync(int id);
     }
 }

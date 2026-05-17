@@ -11,34 +11,14 @@ using System.Text;
 
 namespace Moji.Infrastructure.Repository
 {
-    public class PostRepository : IPostRepository
+    public class PostRepository : GenericRepository<Post>, IPostRepository
     {
         private readonly MojiDbContext _context;
-        public PostRepository(MojiDbContext context)
+        public PostRepository(MojiDbContext context):base(context)
         {
             _context = context;
         }
-
-        public void Add(Post post)
-        {
-            _context.Posts.Add(post);
-        }
-
-        public void Delete(Post post)
-        {
-            _context.Remove(post);
-        }
-
-        public async Task<List<Post>> FindAsync(Expression<Func< Post,bool>> ex)
-        {
-            var queryAble=_context.Posts.AsQueryable();
-            queryAble = queryAble.Where(ex);
-            queryAble = queryAble.AsNoTracking();
-            var result= await queryAble.ToListAsync();
-            return result;
-        }
-
-        public async Task<PageResult<Post>> GetAsync(QueryPostRequest request)
+        public async Task<PageResult<Post>> GetPageAsync(QueryPostRequest request)
         {
             var queryAble= _context.Posts.AsQueryable();
             if(!string.IsNullOrEmpty(request.Title))
@@ -73,18 +53,20 @@ namespace Moji.Infrastructure.Repository
             };
         }
 
-        public async Task<Post?> GetByIdAsync(int id)
+        public async Task<Post?> GetDetailByIdAsync(int id)
         {
            var result=await _context.Posts.Include(p=>p.University)
                                           .Include(p=>p.Creator)
+                                          .Include(p=>p.Images)
                                           .AsNoTracking()
                                           .FirstOrDefaultAsync(p=>p.Id==id);
             return result;
         }
 
-        public void Update(Post post)
+        public async Task<Post?> GetForUpdateAsync(int id)
         {
-            _context.Posts.Update(post);
+            var result=await _context.Posts.FirstOrDefaultAsync(p=>p.Id==id);
+            return result;
         }
     }
 }

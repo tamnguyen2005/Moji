@@ -9,30 +9,12 @@ using System.Text;
 
 namespace Moji.Infrastructure.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : GenericRepository<User>,IUserRepository
     {
         private readonly MojiDbContext _context;
-        public UserRepository(MojiDbContext context)
+        public UserRepository(MojiDbContext context):base(context)
         {
             _context = context;
-        }
-
-        public void Add(User user)
-        {
-            _context.Users.Add(user);
-        }
-
-        public void Delete(User user)
-        {
-            _context.Users.Remove(user);
-        }
-
-        public async Task<List<User>> FindAsync(Expression<Func<User,bool>> ex)
-        {
-            var queryAble=_context.Users.AsQueryable();
-            queryAble = queryAble.Where(ex);
-            var result=await queryAble.ToListAsync();
-            return result;
         }
 
         public async Task<List<User>> GetAsync()
@@ -45,11 +27,6 @@ namespace Moji.Infrastructure.Repository
         {
             var result=await _context.Users.FindAsync(id);
             return result;
-        }
-
-        public void Update(User user)
-        {
-            _context.Users.Update(user);
         }
     }
 }
