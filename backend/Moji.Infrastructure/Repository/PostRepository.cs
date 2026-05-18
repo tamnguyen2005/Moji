@@ -37,18 +37,24 @@ namespace Moji.Infrastructure.Repository
             {
                 queryAble = queryAble.Where(p=>p.UniversityId==request.UniversityId);
             }
+            if(request.CategoryId.HasValue)
+            {
+                queryAble = queryAble.Where(p=>p.CategoryId==request.CategoryId);
+            }
             queryAble = queryAble.Include(p => p.University);
+            queryAble = queryAble.Include(p => p.Images);
+            queryAble = queryAble.Include(p => p.Category);
             queryAble=queryAble.AsNoTracking();
             var totalItem = await queryAble.CountAsync();
             var result = await queryAble.OrderByDescending(p => p.CreateAt)
-                                        .Skip((request.PageNumber-1)*request.PageSize)
-                                        .Take(request.PageSize)
+                                        .Skip(((request.PageNumber-1)*request.PageSize)??0)
+                                        .Take((request.PageSize)??10)
                                         .ToListAsync();
             return new PageResult<Post>
             {
                 Items= result,
-                PageNumber= request.PageNumber,
-                PageSize= request.PageSize,
+                PageNumber= (request.PageNumber)??1,
+                PageSize= (request.PageSize)??10,
                 TotalCount= totalItem
             };
         }

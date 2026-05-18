@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moji.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using Moji.Infrastructure.Context;
 namespace Moji.Infrastructure.Migrations
 {
     [DbContext(typeof(MojiDbContext))]
-    partial class MojiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260518061549_AddImagePropertyToCategory")]
+    partial class AddImagePropertyToCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

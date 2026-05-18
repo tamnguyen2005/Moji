@@ -1,4 +1,28 @@
+import { useEffect, useState } from "react";
+import { GetPost } from "../Api/Post";
+import { GetCategory } from "../Api/Category";
+import { ProductCard, ProductCardSkeleton } from "../components/ProductCard";
+import { CategoryCard, CategoryCardSkeleton } from "../components/CategoryCard";
+
 const Home = () => {
+  const [post, setPost] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [isLoadingPost, setLoadingPost] = useState(true);
+  const [isLoadingCategory, setLoadingCategory] = useState(true);
+  useEffect(() => {
+    const fetchPost = async () => {
+      const response = await GetPost();
+      setPost(response.data.items);
+      setLoadingPost(false);
+    };
+    const fetchCategory = async () => {
+      const response = await GetCategory();
+      setCategory(response.data);
+      setLoadingCategory(false);
+    };
+    fetchCategory();
+    fetchPost();
+  }, []);
   return (
     <>
       <main className="w-full max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-lg">
@@ -54,9 +78,11 @@ const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-md h-auto md:h-[240px]">
             {/* CategoryCard component */}
-            {/* <CategoryCard />
-            <CategoryCard />
-            <CategoryCard /> */}
+            {isLoadingCategory
+              ? Array.from({ length: 3 }).map((_, i) => (
+                  <CategoryCardSkeleton key={i} />
+                ))
+              : category.map((c) => <CategoryCard key={c.id} category={c} />)}
           </div>
         </section>
 
@@ -77,10 +103,11 @@ const Home = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-gutter md:gap-md">
             {/* ProductCard component */}
-            {/* <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard /> */}
+            {isLoadingPost
+              ? Array.from({ length: 4 }).map((_, i) => (
+                  <ProductCardSkeleton key={i} />
+                ))
+              : post.map((p) => <ProductCard key={p.id} product={p} />)}
           </div>
         </section>
       </main>

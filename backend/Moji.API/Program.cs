@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Moji.API.Services;
 using Moji.Application.Interfaces;
 using Moji.Application.Services;
+using Moji.Domain.Entities;
 using Moji.Infrastructure.Auth;
 using Moji.Infrastructure.Context;
 using Moji.Infrastructure.Repository;
@@ -30,8 +31,12 @@ builder.Services.AddSingleton(sp => {
 builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IPostRepository,PostRepository>();
+builder.Services.AddScoped<IGenericRepository<University>, GenericRepository<University>>();
+builder.Services.AddScoped<IGenericRepository<Category>, GenericRepository<Category>>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IUniversityService, UniversityService>();
 builder.Services.AddTransient<IHashPassword, HashPassword>();
 builder.Services.AddTransient<IGenerateToken, GenerateToken>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -49,6 +54,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                         ClockSkew=TimeSpan.Zero
                     };
                 });
+builder.Services.AddCors(o =>
+{
+    o.AddPolicy("AllowFrontend", p =>
+    {
+        p.AllowAnyHeader()
+         .AllowAnyMethod()
+         .AllowCredentials()
+         .WithOrigins("http://localhost:5173");
+    });
+});
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
@@ -61,7 +76,32 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next();
+    }
+    catch(KeyNotFoundException e)
+    {
+        await ResponseHelper.HandleException(context, 404, e.Message);
+    }
+    catch(UnauthorizedAccessException e)
+    {
+        await ResponseHelper.HandleException(context, 401, e.Message);
+    }
+    catch(InvalidOperationException e)
+    {
+        await ResponseHelper.HandleException(context, 400, e.Message);
+    }
+    catch(Exception e)
+    {
+        await ResponseHelper.HandleException(context, 500, e.Message);
+    }
+});
 app.UseHttpsRedirection();
+app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

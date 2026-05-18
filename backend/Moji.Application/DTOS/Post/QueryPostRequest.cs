@@ -10,7 +10,8 @@ namespace Moji.Application.DTOS.Post
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
         public int? UniversityId {  get; set; }
-        public int? PageSize { get; set; } = 10;
-        public int? PageNumber { get; set; } = 1;
+        public int? PageSize { get; set; }
+        public int? CategoryId { get; set; }
+        public int? PageNumber { get; set; }
     }
 }

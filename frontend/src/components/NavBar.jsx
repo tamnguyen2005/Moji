@@ -16,21 +16,21 @@ const NavBar = () => {
           </Link>
 
           <Link
-            to="/Product"
+            to="/Product?CategoryId=1"
             className="font-headline-md text-headline-md font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer active:opacity-80"
           >
             Giáo trình
           </Link>
 
           <Link
-            to="/Product"
+            to="/Product?CategoryId=2"
             className="font-headline-md text-headline-md font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer active:opacity-80"
           >
             Đồ điện tử
           </Link>
 
           <Link
-            to="/Product"
+            to="/Product?CategoryId=3"
             className="font-headline-md text-headline-md font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer active:opacity-80"
           >
             Đồ dùng KTX

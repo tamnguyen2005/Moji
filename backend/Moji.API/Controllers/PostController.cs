@@ -15,7 +15,7 @@ namespace Moji.API.Controllers
             _postService = postService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetPage([FromBody]QueryPostRequest request)
+        public async Task<IActionResult> GetPage([FromQuery]QueryPostRequest request)
         {
             var result=await _postService.GetPostAsync(request);
             return Ok(result);

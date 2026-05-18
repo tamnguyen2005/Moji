@@ -14,15 +14,20 @@ namespace Moji.Application.Services
         private IPostRepository _postRepository;
         private IPhotoService _photoService;
         private ICurrentUser _currentUser;
-        public PostService(IUnitOfWork uow, IPostRepository postRepository, IPhotoService photoService, ICurrentUser currentUser)
+        private IGenericRepository<Category> _categoryRepository;
+        public PostService(IUnitOfWork uow, IPostRepository postRepository, IPhotoService photoService, ICurrentUser currentUser,IGenericRepository<Category> categoryRepository)
         {
             _uow = uow;
             _postRepository = postRepository;
             _photoService = photoService;
             _currentUser = currentUser;
+            _categoryRepository = categoryRepository;
         }
         public async Task CreatePostAsync(CreatePostRequest request)
         {
+            var category=await _categoryRepository.GetByIdAsync(request.CategoryId);
+            if(category==null)
+                throw new KeyNotFoundException("Category does not exist !");
             var post = new Post
             {
                 Title = request.Title,
@@ -70,7 +75,9 @@ namespace Moji.Application.Services
                 Items = result.Items.Select(i => new PostResponse
                 {
                     Id = i.Id,
-                    Location = i.University.Name,
+                    Location = i.University.ShortName,
+                    Image = i.Images.Select(i=>i.Url).FirstOrDefault(),
+                    CategoryName=i.Category.Name,
                     Title = i.Title,
                     Price = i.Price,
                     Status = i.Status
