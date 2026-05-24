@@ -9,9 +9,9 @@ namespace Moji.Application.DTOS.Post
         public string? Title {  get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
-        public int? UniversityId {  get; set; }
+        public List<int> UniversityId {  get; set; }=new List<int>();
         public int? PageSize { get; set; }
-        public int? CategoryId { get; set; }
+        public List<int> CategoryId { get; set; } = new List<int>();
         public int? PageNumber { get; set; }
     }
 }

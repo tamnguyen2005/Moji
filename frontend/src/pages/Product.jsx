@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SideBar from "../components/SideBar";
 import { ProductCard, ProductCardSkeleton } from "../components/ProductCard";
+import { useSearchParams } from "react-router-dom";
+import { GetPostWithQuery } from "../Api/Post";
 const Product = () => {
   const [post, setPost] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchParam] = useSearchParams();
+  const categoryId = searchParam.get("categoryId");
+  const universityId = searchParam.getAll("universityId");
+  const categoryName = searchParam.get("categoryName");
+  const universityIdKey = universityId.join(",");
+
+  useEffect(() => {
+    GetPostWithQuery(categoryId, universityId);
+    console.log({ categoryId, universityId });
+  }, [categoryId, universityIdKey]);
   return (
     <main className="w-full max-w-7xl mx-auto px-4 md:px-6 py-6">
       <div className="flex gap-6 items-start">
@@ -15,8 +27,9 @@ const Product = () => {
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Đồ điện tử</h1>
-
+              <h1 className="text-3xl font-bold text-gray-900">
+                {categoryName}
+              </h1>
               <p className="text-gray-500 mt-1">Hiển thị 124 kết quả</p>
             </div>
 

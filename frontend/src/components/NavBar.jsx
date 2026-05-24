@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 const NavBar = () => {
   return (
     <header className="hidden md:block docked full-width top-0 bg-surface shadow-sm z-50 sticky">
@@ -16,21 +16,21 @@ const NavBar = () => {
           </Link>
 
           <Link
-            to="/Product?CategoryId=1"
+            to="/Product?categoryId=1&categoryName=Giáo trình"
             className="font-headline-md text-headline-md font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer active:opacity-80"
           >
             Giáo trình
           </Link>
 
           <Link
-            to="/Product?CategoryId=2"
+            to="/Product?categoryId=2&categoryName=Đồ điện tử"
             className="font-headline-md text-headline-md font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer active:opacity-80"
           >
             Đồ điện tử
           </Link>
 
           <Link
-            to="/Product?CategoryId=3"
+            to="/Product?categoryId=3&categoryName=Đồ dùng KTX"
             className="font-headline-md text-headline-md font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-200 cursor-pointer active:opacity-80"
           >
             Đồ dùng KTX

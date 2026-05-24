@@ -33,13 +33,13 @@ namespace Moji.Infrastructure.Repository
             {
                 queryAble = queryAble.Where(p=>p.Price<=request.MaxPrice);
             }
-            if(request.UniversityId.HasValue)
+            if(request.UniversityId.Count>0)
             {
-                queryAble = queryAble.Where(p=>p.UniversityId==request.UniversityId);
+                queryAble = queryAble.Where(p=>request.UniversityId.Contains(p.UniversityId));
             }
-            if(request.CategoryId.HasValue)
+            if(request.CategoryId.Count>0)
             {
-                queryAble = queryAble.Where(p=>p.CategoryId==request.CategoryId);
+                queryAble = queryAble.Where(p=>request.CategoryId.Contains(p.CategoryId));
             }
             queryAble = queryAble.Include(p => p.University);
             queryAble = queryAble.Include(p => p.Images);

@@ -1,7 +1,9 @@
+import UniversityCB from "./UniversityCB";
+
 const SideBar = () => {
   return (
-    <aside className="w-full md:w-[280px] md:flex-shrink-0">
-      <div className="bg-white  rounded-2xl border border-gray-200 p-5 flex flex-col gap-6 md:sticky md:top-6">
+    <aside className="w-full md:w-[280px] md:flex-shrink-0 sticky top-[100px]">
+      <div className="bg-white  rounded-2xl border border-gray-200 p-5 flex flex-col gap-6">
         {/* Header */}
         <div className="flex items-center justify-between pb-3 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900">Bộ lọc</h2>
@@ -19,19 +21,12 @@ const SideBar = () => {
 
           <div className="flex flex-col gap-2">
             {[
-              "ĐH Bách Khoa",
-              "ĐH Khoa học Tự nhiên",
-              "ĐH Kinh tế Quốc dân",
-              "ĐH FPT",
+              { id: 1, name: "ĐH Bách Khoa" },
+              { id: 2, name: "ĐH Khoa học Tự nhiên" },
+              { id: 3, name: "ĐH Kinh tế Quốc dân" },
+              { id: 4, name: "ĐH FPT" },
             ].map((u) => (
-              <label key={u} className="flex items-center gap-3 cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 rounded border-gray-300 text-blue-600"
-                />
-
-                <span className="text-sm text-gray-700">{u}</span>
-              </label>
+              <UniversityCB key={u.id} university={u} />
             ))}
           </div>
         </div>
